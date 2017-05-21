@@ -1,0 +1,136 @@
+﻿@model Schoolmc1.Models.Request
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            State
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.state.StateName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+        <dt>
+            Courses
+        </dt>
+        <dd>
+        </dd>
+
+    </dl>
+
+    <table class="table">
+        <tr>
+            <th>
+                Course Title
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+                Day
+            </th>
+            <th>
+                Fee
+            </th>
+            <th>
+                Level
+            </th>
+            <th>
+                Professor
+            </th>
+            <th>
+                Core Course
+            </th>
+        </tr>
+
+        @foreach (var course in Model.Courses)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => course.CourseTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.CourseTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.CourseDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.CourseFee)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.Professor)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => course.CoreCourse)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section footer
+   {
+    @*<p class="navbar-text text-center">*@
+    <nav class="navbar navbar-inverse">
+        <div class="container navbar-text">
+            All rights reserved
+            <span class="glyphicon glyphicon-copyright-mark"></span>
+
+        </div>
+    </nav>
+}

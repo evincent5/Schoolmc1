@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Schoolmc1.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseDay)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseFee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Professor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CoreCourse)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseDay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseFee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Professor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CoreCourse)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+@section footer
+   {
+    <footer class="footer">
+        <p class="navbar-text text-center">
+            All rights reserved
+            <span class="glyphicon glyphicon-copyright-mark"></span>
+        </p>
+    </footer>
+
+}
