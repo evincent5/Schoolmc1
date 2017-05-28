@@ -62,7 +62,6 @@ namespace Schoolmc1.Controllers
 
             vm.NewRequest = requestRepo.GetById(id);
             var cou = vm.NewRequest.Courses.Select(x => x.Id);
-            //ViewBag.Courses = new MultiSelectList(db.Courses.ToList(), "Id", "CourseTitle");
             ViewBag.Courses = new MultiSelectList(courseRepo.Get(), "Id", "CourseTitle", cou);
             return View(vm);
         }
