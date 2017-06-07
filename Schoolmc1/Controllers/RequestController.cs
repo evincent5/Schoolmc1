@@ -60,11 +60,11 @@ namespace Schoolmc1.Controllers
         }
 
         [ResponseType(typeof(Request))]
-
         public IHttpActionResult Post([FromBody] Request request)
         {
             if(!ModelState.IsValid)
             {
+               
                 return BadRequest(ModelState);
             }
             else
@@ -73,8 +73,6 @@ namespace Schoolmc1.Controllers
                 requestRepo.Save();
                 return Ok(request);
             }
-           
-
         }
 
         [ResponseType(typeof(Request))]

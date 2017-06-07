@@ -14,7 +14,7 @@ namespace Schoolmc1.Controllers
     public class CourseController : ApiController
     {
         CourseRepository courseRepo;
-        public CourseController()  //h
+        public CourseController()  
         {
             var context = new SchoolDataEntities1();
             courseRepo = new CourseRepository(context);

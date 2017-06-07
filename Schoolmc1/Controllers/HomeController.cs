@@ -25,7 +25,6 @@ namespace Schoolmc1.Controllers
         public ActionResult Create()
         {
             RequestViewModel vm = new RequestViewModel();
-            //var vm = new CreateRequestViewModel();
             vm.StateId = stateRepo.Get().Select(x => new SelectListItem()
             {
                 Text = x.StateName,
@@ -66,27 +65,7 @@ namespace Schoolmc1.Controllers
             return View(vm);
         }
 
-        //        [HttpPost]
-        //        //public ActionResult Edit(RequestViewModel vm)
-        //        //{
-        //        //    var updateRequest = db.Requests.Include("Courses").ToList();
-        //        //    var request = db.Requests.Find(vm.NewRequest.Id);
-        //        //    db.Entry(request).CurrentValues.SetValues(vm.NewRequest);
-        //        //    var coursesArray = request.Courses.ToArray();
-        //        //    for (var i = 0; i < coursesArray.Length; i++)
-        //        //    {
-        //        //        request.Courses.Remove(coursesArray[i]);
-        //        //    }
-        //        //    foreach (var cid in vm.CourseIds)
-        //        //    {
-        //        //        var addedCourse = db.Courses.Find(cid);
-        //        //        db.Courses.Attach(addedCourse);
-        //        //        request.Courses.Add(addedCourse);
-        //        //    }
-        //        //    db.SaveChanges();
-        //        //    return RedirectToAction("Details");
-        //        //}
-
+        [HttpPost]
         public ActionResult Edit(RequestViewModel requestViewModel)
         {
             Request request = requestRepo.GetById(requestViewModel.NewRequest.Id);
@@ -141,22 +120,6 @@ namespace Schoolmc1.Controllers
             //return View(index);
         }
 
-        //        public ActionResult GetBy(string str)
-        //        {
-        //            return View(requestRepo.GetBy(x => x.FirstName == str || x.LastName == str));
-        //        }
-
-
-        //        //public ActionResult Details(int id)
-        //        //{
-        //        //    var k = db.Requests.Find(id);
-        //        //    if (k == null)
-        //        //    {
-        //        //        var data = db.Requests.ToList();
-        //        //        return View("Index", data);
-        //        //    }
-        //        //    return View(k);
-        //        //}
         public ActionResult Details(int id)
         {
             var k = requestRepo.GetById(id);
