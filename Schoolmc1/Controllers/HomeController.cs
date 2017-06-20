@@ -88,10 +88,25 @@ namespace Schoolmc1.Controllers
 
 
         //Home/Index
-        public ActionResult Index(string str)
+        public ActionResult Index(string search)
         {
-            IEnumerable<Request> request = requestRepo.Get();
-            return View(Mapper.Map<IEnumerable<RequestDto>>(request));
+            //if (searchBy == "FirstName")
+            //{
+            //    return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
+            //    search == null).ToList()));
+            //}
+            //return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
+                x.LastName.Contains(search)).ToList()));
+            }
+            return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
+
+
+            ////IEnumerable<Request> request = requestRepo.Get();
+            ////return View(Mapper.Map<IEnumerable<RequestDto>>(request));
 
 
             //if (!string.IsNullOrEmpty(str))
@@ -100,7 +115,7 @@ namespace Schoolmc1.Controllers
             //    x.LastName == str).OrderByDescending(x => x.Id).ToList());
             //}
             //return View(requestRepo.Get().OrderByDescending(x => x.Id).ToList());
-            
+
             //List<RequestDto> requestDto = new List<RequestDto>();
             //IEnumerable<Request> request = requestRepo.Get();
             //foreach (var x in request)
