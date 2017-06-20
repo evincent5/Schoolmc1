@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
+using PagedList.Mvc;
+using PagedList;
 
 namespace Schoolmc1.Controllers
 {
@@ -88,21 +90,36 @@ namespace Schoolmc1.Controllers
 
 
         //Home/Index
-        public ActionResult Index(string search)
+        public ActionResult Index(string searchBy, string search, int? page, string sortBy)
         {
-            //if (searchBy == "FirstName")
+            //ViewBag.SortLastNameParameter = string.IsNullOrEmpty(sortBy) ? "LastName desc" : "";
+            //ViewBag.SortStateParameter = sortBy == "State" ? "State desc" : "State";
+            //var request = Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()).AsQueryable();
+            if (searchBy == "City")
+            {
+                //request = request.Where(x => x.City.StartsWith(search) ||
+                //search == null);
+
+                return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.City.StartsWith(search) ||
+                search == null).ToList()).ToPagedList(page ?? 1, 10));
+            }
+            else if(searchBy == "FirstName")
+            {
+                //request = request.Where(x => x.FirstName.StartsWith(search) ||
+                //search == null);
+
+                return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.StartsWith(search) ||
+                search == null).ToList()).ToPagedList(page ?? 1, 10));
+            }
+            return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()).ToPagedList(page ?? 1, 10));
+
+
+            //if (!string.IsNullOrEmpty(search))
             //{
             //    return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
-            //    search == null).ToList()));
+            //    x.LastName.Contains(search)).ToList()));
             //}
             //return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
-
-            if (!string.IsNullOrEmpty(search))
-            {
-                return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
-                x.LastName.Contains(search)).ToList()));
-            }
-            return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
 
 
             ////IEnumerable<Request> request = requestRepo.Get();
