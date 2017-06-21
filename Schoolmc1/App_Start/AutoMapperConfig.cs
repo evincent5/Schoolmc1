@@ -17,10 +17,6 @@ namespace Schoolmc1.App_Start
                      opt => opt.MapFrom(source => source.state.StateName));
 
                     cfg.CreateMap<Course, CourseDto>();
-                    //.ForMember(destination => destination.CourseTime,
-                    //opt => opt.MapFrom(source =>
-                    //((DateTime)source.CourseTime).ToShortTimeString()));
-
                     cfg.CreateMap<state, StateDto>();
                  }
                 );

@@ -28,14 +28,14 @@ namespace Schoolmc1.Controllers
         public IHttpActionResult Get(int id)
         {
             Request request = requestRepo.GetById(id);
-            if(request == null)
+            //Request request = requestRepo.GetByIdWithCourses(id);
+            if (request == null)
             {
                 return NotFound();
-
             }
             else
             {
-                return Ok(MappingHelper.MapRequest(request));
+                return Ok(request);
             }
         }
 

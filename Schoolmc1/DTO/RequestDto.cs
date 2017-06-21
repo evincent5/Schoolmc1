@@ -14,6 +14,6 @@ namespace Schoolmc1.DTO
         public string City { get; set; }
         public string StateName { get; set; }
         public string EmailAddress { get; set; }
-
+        public List<CourseDto> Courses { get; set; }
     }
 }
