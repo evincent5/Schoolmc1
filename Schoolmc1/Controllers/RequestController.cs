@@ -27,7 +27,8 @@ namespace Schoolmc1.Controllers
         [ResponseType(typeof(RequestDto))]
         public IHttpActionResult Get(int id)
         {
-            Request request = requestRepo.GetById(id);
+            RequestDto request = MappingHelper.MapRequest(requestRepo.GetById(id));
+            //RequestDto request = MappingHelper.MapRequest(requestRepo.GetByIdWithCourses(id));
             //Request request = requestRepo.GetByIdWithCourses(id);
             if (request == null)
             {
@@ -39,8 +40,8 @@ namespace Schoolmc1.Controllers
             }
         }
 
-        [ResponseType(typeof(Request))]
-        public IHttpActionResult Put(int id, Request request)
+        [ResponseType(typeof(RequestDto))]
+        public IHttpActionResult Put(int id, RequestDto request)
         {
             if (!ModelState.IsValid)
             {
@@ -50,9 +51,9 @@ namespace Schoolmc1.Controllers
             {
                 return BadRequest("Ids did not matched");
             }
-            else
+            else 
             {
-                requestRepo.Update(id, request);
+                requestRepo.UpdateWithCourses(id, request);
                 requestRepo.Save();
                 return Ok(request);
 
@@ -64,11 +65,11 @@ namespace Schoolmc1.Controllers
         {
             if(!ModelState.IsValid)
             {
-               
                 return BadRequest(ModelState);
             }
             else
             {
+
                 requestRepo.Insert(request);
                 requestRepo.Save();
                 return Ok(request);

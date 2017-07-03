@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using AutoMapper;
 using PagedList.Mvc;
 using PagedList;
+using System;
+using Schoolmc1.Common;
 
 namespace Schoolmc1.Controllers
 {
@@ -88,24 +90,32 @@ namespace Schoolmc1.Controllers
             return View("Details", requestViewModel.NewRequest);
         }
 
+        public ActionResult Details(int id)
+        {
+            var details = requestRepo.GetById(id);
+            return View(details);
+        }
+
 
         //Home/Index
         public ActionResult Index(string searchBy, string search, int? page, string sortBy)
         {
-            //ViewBag.SortLastNameParameter = string.IsNullOrEmpty(sortBy) ? "LastName desc" : "";
-            //ViewBag.SortStateParameter = sortBy == "State" ? "State desc" : "State";
+            //ViewBag.SortFirstNameParameter = string.IsNullOrEmpty(sortBy) ? "FirstName desc" : "";
+            //ViewBag.SortCityParameter = sortBy == "City" ? "City desc" : "City";
+
             //var request = Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()).AsQueryable();
+
             if (searchBy == "City")
             {
-                //request = request.Where(x => x.City.StartsWith(search) ||
-                //search == null);
+                //request = request.Where(x => x.City == search || search == null);
 
                 return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.City.StartsWith(search) ||
                 search == null).ToList()).ToPagedList(page ?? 1, 10));
+
             }
-            else if(searchBy == "FirstName")
+            else if (searchBy == "FirstName")
             {
-                //request = request.Where(x => x.FirstName.StartsWith(search) ||
+                //request = request.Where(x => x.FirstName.Contains(search) ||
                 //search == null);
 
                 return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.StartsWith(search) ||
@@ -113,50 +123,80 @@ namespace Schoolmc1.Controllers
             }
             return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()).ToPagedList(page ?? 1, 10));
 
-
-            //if (!string.IsNullOrEmpty(search))
+            //switch (sortBy)
             //{
-            //    return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
-            //    x.LastName.Contains(search)).ToList()));
+            //    case "FirstName desc":
+            //        request = request.OrderByDescending(x => x.FirstName);
+            //        break;
+            //    case "City":
+            //        request = request.OrderBy(x => x.City);
+            //        break;
+            //    case "City desc":
+            //        request = request.OrderByDescending(x => x.City);
+            //        break;
+            //    default:
+            //        request = request.OrderBy(x => x.FirstName);
+            //        break;
             //}
-            //return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
+            //return View(request.ToPagedList(page ?? 1, 10));
 
-
-            ////IEnumerable<Request> request = requestRepo.Get();
-            ////return View(Mapper.Map<IEnumerable<RequestDto>>(request));
-
-
-            //if (!string.IsNullOrEmpty(str))
-            //{
-            //    return View(requestRepo.GetBy(x => x.FirstName == str ||
-            //    x.LastName == str).OrderByDescending(x => x.Id).ToList());
-            //}
-            //return View(requestRepo.Get().OrderByDescending(x => x.Id).ToList());
-
-            //List<RequestDto> requestDto = new List<RequestDto>();
-            //IEnumerable<Request> request = requestRepo.Get();
-            //foreach (var x in request)
-            //{
-            //    RequestDto reqDto = new RequestDto();
-            //    reqDto.FirstName = x.FirstName;
-            //    reqDto.LastName = x.LastName;
-            //    reqDto.City = x.City;
-            //    reqDto.StateName = x.state.StateName;
-            //    reqDto.EmailAddress = x.EmailAddress;
-            //    reqDto.Id = x.Id;
-            //    reqDto.PhoneNumber = x.PhoneNumber;
-            //    requestDto.Add(reqDto);
-            //}
-            //return View(requestDto);
-            //var index = requestRepo.Get();
-            //return View(index);
         }
 
-        public ActionResult Details(int id)
+
+        [PartialCache("1MinuteCache")]
+        [ChildActionOnly]
+        public string GetRequestCount()
         {
-            var k = requestRepo.GetById(id);
-            return View(k);
+            return "Request Count= " + requestRepo.Get().Count().ToString() 
+                + "@"+ DateTime.Now.ToString();
         }
-
     }
 }
+
+
+
+
+
+
+
+
+
+//return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()).ToPagedList(page ?? 1, 10));
+
+
+//if (!string.IsNullOrEmpty(search))
+//{
+//    return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.GetBy(x => x.FirstName.Contains(search) ||
+//    x.LastName.Contains(search)).ToList()));
+//}
+//return View(Mapper.Map<IEnumerable<RequestDto>>(requestRepo.Get()));
+
+
+////IEnumerable<Request> request = requestRepo.Get();
+////return View(Mapper.Map<IEnumerable<RequestDto>>(request));
+
+
+//if (!string.IsNullOrEmpty(str))
+//{
+//    return View(requestRepo.GetBy(x => x.FirstName == str ||
+//    x.LastName == str).OrderByDescending(x => x.Id).ToList());
+//}
+//return View(requestRepo.Get().OrderByDescending(x => x.Id).ToList());
+
+//List<RequestDto> requestDto = new List<RequestDto>();
+//IEnumerable<Request> request = requestRepo.Get();
+//foreach (var x in request)
+//{
+//    RequestDto reqDto = new RequestDto();
+//    reqDto.FirstName = x.FirstName;
+//    reqDto.LastName = x.LastName;
+//    reqDto.City = x.City;
+//    reqDto.StateName = x.state.StateName;
+//    reqDto.EmailAddress = x.EmailAddress;
+//    reqDto.Id = x.Id;
+//    reqDto.PhoneNumber = x.PhoneNumber;
+//    requestDto.Add(reqDto);
+//}
+//return View(requestDto);
+//var index = requestRepo.Get();
+//return View(index);

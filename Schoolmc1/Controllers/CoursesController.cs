@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Schoolmc1.Models;
+using System.Collections.Generic;
 
 namespace Schoolmc1.Controllers
 {
@@ -40,6 +41,10 @@ namespace Schoolmc1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,CourseTitle,CourseTime,CourseDay,CourseFee,Level,Professor,CoreCourse")] Course course)
         {
+            //if (db.Courses.Any(x => x.Professor == course.Professor))
+            //{
+            //    ModelState.AddModelError("Professor", "Professor already assigned");
+            //}
                 db.Courses.Add(course);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -49,6 +54,7 @@ namespace Schoolmc1.Controllers
         public ActionResult Edit(int id)
         {
             Course course = db.Courses.Find(id);
+            //course.ConfirmProfessor = course.Professor;
             if (course == null)
             {
                 return RedirectToAction("Index");
@@ -92,6 +98,12 @@ namespace Schoolmc1.Controllers
             db.Courses.Remove(course);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public JsonResult IsProfessorNameAvailable(string Professor )
+        {
+            return Json(!db.Courses.Any(x => x.Professor == Professor), 
+                JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

@@ -6,7 +6,6 @@
 
 <h2>Edit</h2>
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -14,7 +13,7 @@
     <div class="form-horizontal">
         <h4>Course</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "Please fix the following errors and then submit", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
@@ -66,6 +65,13 @@
                 @Html.ValidationMessageFor(model => model.Professor, "", new { @class = "text-danger" })
             </div>
         </div>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ConfirmProfessor, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ConfirmProfessor, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ConfirmProfessor, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Level, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,18 +81,17 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-default"/>
+                </div>
             </div>
-        </div>
-    </div>
+</div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -100,3 +105,16 @@
     </footer>
 
 }
+
+
+@*<script type="text/javascript" language="javascript">
+    function MouseOver(controlId) {
+        var control = document.getElementById(controlId);
+        control.style.backgroundColor = 'red';
+    }
+    function MouseOut(controlId) {
+        var control = document.getElementById(controlId);
+        control.style.backgroundColor = 'grey';
+    }
+</script>*@
+

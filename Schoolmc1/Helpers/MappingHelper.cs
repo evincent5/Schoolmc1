@@ -41,6 +41,11 @@ namespace Schoolmc1.Helpers
         {
             return AutoMapper.Mapper.Map<IEnumerable<CourseDto>>(course);
         }
+        public static Course MapCourseDto(CourseDto course)
+        {
+            return AutoMapper.Mapper.Map<Course>(course);
+        }
+
 
 
     }
